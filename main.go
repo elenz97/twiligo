@@ -81,7 +81,7 @@ func makeCall(w http.ResponseWriter, r *http.Request) {
 			fmt.Println(data["sid"])
 		}
 	} else {
-		fmt.Println("Response status from Twilio API:", resp.Status, "\n")
+		fmt.Println("Response status from Twilio API:", resp.Status)
 		w.Write([]byte("Something went wrong trying to POST to the Twilio API\nPlease check your credentials specified in .env,\nor refer to the logs\n"))
 	}
 }
