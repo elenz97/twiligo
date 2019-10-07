@@ -10,6 +10,7 @@ import (
 	"net/url"
 	"os"
 	"strings"
+	"time"
 )
 
 type TwiML struct {
@@ -26,7 +27,8 @@ func main() {
 }
 
 func twiml(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("Handling request for /twiml")
+	currentTime := time.Now()
+	fmt.Println(currentTime.Format("2006-01-02 15:04:05"), "Handling request for /twiml")
 	twiml := TwiML{Play: os.Getenv("TWILIO_MP3_URL")}
 	x, err := xml.Marshal(twiml)
 	if err != nil {
@@ -38,7 +40,8 @@ func twiml(w http.ResponseWriter, r *http.Request) {
 }
 
 func makeCall(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("Handling request for /makecall")
+	currentTime := time.Now()
+	fmt.Println(currentTime.Format("2006-01-02 15:04:05"), "Handling request for /makecall")
 	var (
 		accountSid     = os.Getenv("TWILIO_ACCOUNT_SID")
 		authToken      = os.Getenv("TWILIO_ACCOUNT_TOKEN")
@@ -81,7 +84,7 @@ func makeCall(w http.ResponseWriter, r *http.Request) {
 			fmt.Println(data["sid"])
 		}
 	} else {
-		fmt.Println("Response status from Twilio API:", resp.Status)
+		fmt.Println(currentTime.Format("2006-01-02 15:04:05"), "Response status from Twilio API:", resp.Status)
 		w.Write([]byte("Something went wrong trying to POST to the Twilio API\nPlease check your credentials specified in .env,\nor refer to the logs\n"))
 	}
 }
